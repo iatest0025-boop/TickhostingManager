@@ -1,0 +1,21 @@
+{
+  "name": "tickhostingmanager",
+  "version": "1.0.0",
+  "description": "Gestor de renovación automática y anti-hibernación para Tickhosting",
+  "main": "bot.js",
+  "scripts": {
+    "renew": "node renew.js",
+    "afk": "node afk-bot.js",
+    "start": "node bot.js"
+  },
+  "keywords": [],
+  "author": "Gemini Developer",
+  "license": "ISC",
+  "type": "commonjs",
+  "dependencies": {
+    "discord.js": "^14.26.3",
+    "dotenv": "^17.4.2",
+    "mineflayer": "^4.22.0",
+    "puppeteer": "^24.42.0"
+  }
+}

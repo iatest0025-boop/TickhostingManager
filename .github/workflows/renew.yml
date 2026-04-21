@@ -1,0 +1,36 @@
+name: Tickhosting 24/7 Manager
+
+on:
+  schedule:
+    - cron: '50 3,7,11,15,19,23 * * *' # Ejecución cada 3 horas y 50 minutos (aprox.)
+  workflow_dispatch: # Botón manual en GitHub
+
+jobs:
+  manager_24_7:
+    runs-on: ubuntu-latest
+    timeout-minutes: 250 # Margen para las 4 horas (240 min)
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+      
+      - name: Instalar dependencias
+        run: npm install
+
+      - name: Ejecutar Renovación y Bot Minecraft (24/7)
+        env:
+          TICK_USER: ${{ secrets.TICK_USER }}
+          TICK_PASS: ${{ secrets.TICK_PASS }}
+          DISCORD_WEBHOOK: ${{ secrets.DISCORD_WEBHOOK }}
+          LICENSE_KEY: ${{ secrets.LICENSE_KEY }}
+          MC_HOST: ${{ secrets.MC_HOST }}
+          MC_USER: ${{ secrets.MC_USER }}
+          MC_VERSION: ${{ secrets.MC_VERSION }}
+        run: |
+          # Lanzamos la renovación en primer plano para asegurar éxito
+          node renew.js
+          
+          # Lanzamos el bot de Minecraft que se quedará 4 horas
+          node afk-bot.js
